@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments/head::head('Lista aktualnych dostaw')}">
+</head>
+
+<body>
+<header th:insert="~{layout/fragments/header::header}"></header>
+<div class="row">
+    <div class="centered">
+        <h2>Wolne zamówienia</h2>
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Dodano</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col">Cena</th>
+                    <th scope="col">Dystans</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" order : ${orders}">
+                    <th scope="row" th:text="*{order.id}">Id</th>
+                    <td th:text="${#temporals.format(order.inserted, 'yyyy-MM-dd HH:mm')}">Dodano</td>
+                    <td th:text="*{order.formattedAddress}">Adres</td>
+                    <td th:text="*{order.price}">Cena</td>
+                    <td th:text="*{order.distanceStr}">Dystans</td>
+                    <td><a th:href="@{/delivery/list/assign/{id}(id=${order.id})}">Przypisz</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>Przypisane zamówienia</h3>
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Dodano</th>
+                    <th scope="col">Przypisano</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col">Cena</th>
+                    <th scope="col">Dystans</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" order : ${myOrders}">
+                    <th scope="row" th:text="*{order.id}">Id</th>
+                    <td th:text="${#temporals.format(order.inserted, 'yyyy-MM-dd HH:mm')}">Dodano</td>
+                    <td th:text="${#temporals.format(order.assigned, 'yyyy-MM-dd HH:mm')}">Przypisano</td>
+                    <td th:text="*{order.formattedAddress}">Adres</td>
+                    <td th:text="*{order.price}">Cena</td>
+                    <td th:text="*{order.distanceStr}">Dystans</td>
+                    <td><a th:href="@{/delivery/list/cancel/{id}(id=${order.id})}">Odepnij</a></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

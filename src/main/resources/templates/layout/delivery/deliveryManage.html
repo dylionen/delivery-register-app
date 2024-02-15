@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments/head::head('Zarządzanie dostawami')}">
+</head>
+<body>
+<script>
+    let ORDER_ID = null;
+    $(function () {
+        $("#dialogDeliver").dialog({
+            autoOpen: false,
+            buttons: {
+                OK: function () {
+                    let newDeliver = $('#checkedDeliver').val();
+                    if (newDeliver !== '') {
+                        newDeliver = '/' + newDeliver;
+                    }
+                    window.location.replace(window.location.href + '/changedeliver/' + ORDER_ID + newDeliver);
+                    $(this).dialog("close");
+                }
+            },
+            title: "Zmiana dostawcy",
+            position: [null, 32],
+        });
+
+        $("#opener-2").click(function () {
+            $("#dialog-2").dialog("open");
+        });
+    });
+
+    function changeDeliver(orderId) {
+        ORDER_ID = orderId;
+        $("#dialogDeliver").dialog("open");
+    }
+
+</script>
+<header th:insert="~{layout/fragments/header::header}"></header>
+<div class="row">
+    <div id="dialogDeliver">
+        <div class="form-group">
+            <label for="checkedDeliver">Wybrany dostawca:</label>
+            <select class="form-control" id="checkedDeliver" required>
+                <option value=""></option>
+                <option th:each="deliver : ${delivers}" th:value="${deliver.id}"
+                        th:text="${deliver.name}"></option>
+            </select>
+        </div>
+    </div>
+
+    <div class="centered">
+        <h2>Wszystkie zamówienia</h2>
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Dodano</th>
+                    <th scope="col">Adres</th>
+                    <th scope="col">Cena</th>
+                    <th scope="col">Dystans</th>
+                    <th scope="col">Przypisane do</th>
+                    <th scope="col">Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each=" order : ${orders}">
+                    <th scope="row" th:text="*{order.id}">Id</th>
+                    <td th:text="${#temporals.format(order.inserted, 'yyyy-MM-dd HH:mm')}">Dodano</td>
+                    <td th:text="*{order.formattedAddress}">Adres</td>
+                    <td th:text="*{order.price}">Cena</td>
+                    <td th:text="*{order.distanceStr}">Dystans</td>
+                    <td th:text="*{order.deliverUser?.name}">User</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" th:onclick="'changeDeliver(' + ${order.id} + ')'">
+                            Przypisz do
+                        </button>
+
+                        <a th:href="@{/delivery/managelist/close/{id}(id=${order.id})}">
+                            <button type="button" class="btn btn-danger">Zamknij zamówienie</button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

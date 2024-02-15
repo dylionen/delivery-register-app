@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments/head::head('Dodaj dostawę')}">
+</head>
+
+<body>
+<header th:insert="~{layout/fragments/header::header}"></header>
+
+
+<div class="add" id="addOrder">
+    <h1>Dodawanie zamówienia</h1>
+    <form th:action="@{/delivery/addorder}" method="post" role="form" th:object="${order}"
+          enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="clientName">Nazwa klienta:</label>
+            <input type="text" class="form-control" th:field="*{clientName}" id="clientName" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Cena:</label>
+            <input type="number" class="form-control" step=".01" th:field="*{price}" id="price" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Adres:</label>
+            <input type="text" class="form-control" th:field="*{localization.address}" id="address" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('localization.address')}" th:errors="*{localization.address}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="houseNumber">Numer bloku:</label>
+            <input type="text" class="form-control" th:field="*{localization.houseNumber}" id="houseNumber" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('localization.houseNumber')}"
+                 th:errors="*{localization.houseNumber}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="flatNumber">Numer mieszkania:</label>
+            <input type="text" class="form-control" th:field="*{localization.flatNumber}" id="flatNumber"/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('localization.flatNumber')}" th:errors="*{localization.flatNumber}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="zipCode">Kod pocztowy:</label>
+            <input type="text" class="form-control" th:field="*{localization.zipCode}" id="zipCode"/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('localization.zipCode')}" th:errors="*{localization.zipCode}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="city">Miasto:</label>
+            <input type="text" class="form-control" th:field="*{localization.city}" id="city" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('localization.city')}" th:errors="*{localization.city}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </form>
+</div>
+
+
+</body>
+</html>

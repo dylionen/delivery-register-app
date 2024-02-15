@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments/head::head('Index')}">
+</head>
+
+<body>
+<header th:insert="~{layout/fragments/header::header}"></header>
+
+<p><a href="delivery/addpremiseaddress">Dodaj lokalizację</a></p>
+<p><a href="delivery/addorder">Dodaj zamówienie</a></p>
+<p><a href="delivery/list">Lista zamówień</a></p>
+<p><a href="panel">Panel</a></p>
+<p><a href="/logout">Wyloguj</a></p>
+</body>
+</html>

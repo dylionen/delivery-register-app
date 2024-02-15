@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="~{layout/fragments/head::head('Panel')}">
+</head>
+
+<body>
+<header th:insert="~{layout/fragments/header::header}"></header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <form th:action="@{/panel}" method="post" role="form" th:object="${panel}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="localization">Wybrany lokal :</label>
+                    <select class="form-control" th:field="*{actualLocalization}" id="localization" required>
+                        <option th:each="localization : ${localizations}" th:value="${localization.id}"
+                                th:text="${localization.name}"></option>
+                    </select>
+                    <div class="alert alert-warning" th:if="${#fields.hasErrors('actualLocalization')}"
+                         th:errors="*{actualLocalization}"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Zapisz</button>
+            </form>
+
+            <div>
+                <h2>Aktywne role</h2>
+                <div sec:authentication="principal.authorities"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

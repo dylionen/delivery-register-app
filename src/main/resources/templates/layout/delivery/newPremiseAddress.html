@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/fragments/head::head('Dodaj lokalizację')}">
+</head>
+
+<body>
+<header th:insert="~{layout/fragments/header::header}"> </header>
+
+<div class="add" id="addPremise">
+    <h1 th:text="${localization.id == null ? 'Dodawanie lokalizacji' : 'Edycja lokalizacji'}"></h1>
+    <form th:action="@{/delivery/addpremiseaddress}" method="post" role="form" th:object="${localization}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Nazwa:</label>
+            <input type="text" class="form-control" th:field="*{name}" id="name" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Adres:</label>
+            <input type="text" class="form-control" th:field="*{address}" id="address" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="houseNumber">Numer bloku:</label>
+            <input type="text" class="form-control" th:field="*{houseNumber}" id="houseNumber" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('houseNumber')}" th:errors="*{houseNumber}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="flatNumber">Numer mieszkania:</label>
+            <input type="text" class="form-control" th:field="*{flatNumber}" id="flatNumber"/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('flatNumber')}" th:errors="*{flatNumber}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="zipCode">Kod pocztowy:</label>
+            <input type="text" class="form-control" th:field="*{zipCode}" id="zipCode" />
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="city">Miasto:</label>
+            <input type="text" class="form-control" th:field="*{city}" id="city" required/>
+            <div class="alert alert-warning" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </form>
+</div>
+
+</body>
+</html>
